@@ -1,16 +1,21 @@
 ---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
 
+const all = await getCollection('posts');
+const posts = all
+  .filter(p => !p.data.draft)
+  .sort((a,b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base title="WithContent Blog">
+  <h2>Latest Posts</h2>
+  <ul class="post-list">
+    {posts.map((post) => (
+      <li class="post-item">
+        <a class="title" href={`/posts/${post.slug}/`}>{post.data.title}</a>
+        <div class="post-meta">{new Date(post.data.pubDate).toDateString()}</div>
+        {post.data.description && <p>{post.data.description}</p>}
+      </li>
+    ))}
+  </ul>
+</Base>

@@ -1,0 +1,24 @@
+---
+const { title = "WithContent Blog" } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/styles/global.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <h1><a href="/">WithContent Blog</a></h1>
+      <nav><a href="/">Home</a></nav>
+    </header>
+    <main class="site-main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>© {new Date().getFullYear()} WithContent.ai</p>
+    </footer>
+  </body>
+</html>
